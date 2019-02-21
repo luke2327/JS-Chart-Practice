@@ -10,6 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "chart.js": "^2.7.3",
-    "chartist": "^0.11.0"
+    "chartist": "^0.11.0",
+    "dygraphs": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
   }
 }

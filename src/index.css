@@ -2,7 +2,7 @@ html, body{
   padding: 0;
   margin-right: 0;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 100px;
   margin-left: 10px;
   position: absolute;
 }
@@ -11,11 +11,10 @@ html, body{
   display: flex;
 }
 
-.chartistJs{
-  height: 400px;
-  width: 400px;
-}
-
-canvas, .chartistJs{
-  border: 1px solid #e0e0e8
+.chart{
+  border: 1px solid #e0e0e8;
+  height: 300px;
+  width: 300px;
+  margin: 8px;
+  border-radius: 2px;
 }

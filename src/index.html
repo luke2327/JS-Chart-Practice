@@ -4,25 +4,42 @@
     <title>Chart JS Test page</title>
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
     <link rel="stylesheet" href="./index.css">
   </head>
+  
   <body>
     <h1>Chart JS</h1>
     <div class="flexible" aria-label="chartJs">
-      <canvas id="chartJsVal" width="400" height="400"></canvas>
+      <canvas class="chart" id="chartJsChart0" width="400" height="400"></canvas>
+      <canvas class="chart" id="chartJsChart1" width="400" height="400"></canvas>
+      <canvas class="chart" id="chartJsChart2" width="400" height="400"></canvas>
+      <canvas class="chart" id="chartJsChart3" width="400" height="400"></canvas>
     </div>
     
     <h1>Chartist JS</h1>
     <div class="flexible" aria-label="chartistJs">
-      <div class="chartistJs" id="chart0"></div>
-      <div class="chartistJs" id="chart1"></div>
-      <div class="chartistJs" id="chart2"></div>
-      <div class="chartistJs" id="chart3"></div>
+      <div class="chart" id="chartistJsChart0"></div>
+      <div class="chart" id="chartistJsChart1"></div>
+      <div class="chart" id="chartistJsChart2"></div>
+      <div class="chart" id="chartistJsChart3"></div>
+    </div>
+
+    <h1>Dygraphs JS</h1>
+    <div class="flexible" aria-label="dygraphsJs">
+      <div class="chart" id="dygraphsJsChart0"></div>
+      <div class="chart" id="dygraphsJsChart1"></div>
+      <div class="chart" id="dygraphsJsChart2"></div>
+      <div class="chart" id="dygraphsJsChart3"></div>
     </div>
   </body>
-  
+
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+  <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+  <script type="text/javascript" src="static/ChartJsUtils.js"></script>
   <script type="text/javascript" src="./chart.js"></script>
   <script type="text/javascript" src="./chartist.js"></script>
+  <script type="text/javascript" src="./dygraphs.js"></script>
 </html>
