@@ -1,0 +1,21 @@
+html, body{
+  padding: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 10px;
+  position: absolute;
+}
+
+.flexible{
+  display: flex;
+}
+
+.chartistJs{
+  height: 400px;
+  width: 400px;
+}
+
+canvas, .chartistJs{
+  border: 1px solid #e0e0e8
+}
