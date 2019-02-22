@@ -1,10 +1,13 @@
 html, body{
+  width: 100%;
   padding: 0;
   margin-right: 0;
   margin-top: 0;
   margin-bottom: 100px;
-  margin-left: 10px;
-  position: absolute;
+}
+
+body{
+  padding-left: 10px;
 }
 
 .flexible{
@@ -17,4 +20,9 @@ html, body{
   width: 300px;
   margin: 8px;
   border-radius: 2px;
+}
+
+.FEbCLink{
+  border-bottom: 1px solid #e0e0e8;
+  padding-bottom: 0px;
 }

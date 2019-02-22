@@ -18,7 +18,7 @@ new Chartist.Bar('#chartistJsChart2', {
   series: [[5, 2, 8, 3]]
 });
 
-var chart = new Chartist.Line('#chartistJsChart3', {
+new Chartist.Line('#chartistJsChart3', {
   labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
 
   series:[{
