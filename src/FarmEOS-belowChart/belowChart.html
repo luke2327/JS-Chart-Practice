@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="belowChart.css">
   </head>
 
   <body>
@@ -16,10 +17,12 @@
         </h3>
       </div>
     </header>
-    <h1>FARM EOS below Chart</h1>
-    <div>
-      <canvas id="FEbCArea" width="1000" height="400"></canvas>
-      <button id="buttonTest" onclick="report();">reDraw</button>
+    <h1>FARM EOS Chart</h1>
+    <div class="cover-area">
+      <button onclick="chartFrame.destroy()">destroy</button>
+      <button onclick="chartFrame.clear()">clear</button>
+      <button onclick="updateData(chartFrame)">update data</button>
+      <canvas id="FEbCArea" width="793" height="190"></canvas>
     </div>
   </body>
   

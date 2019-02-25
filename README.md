@@ -23,3 +23,8 @@ Rickshaw
 Cubism.js  
 Plottable.js  
 Canvas.js　        －有料 ([https://canvasjs.com/](https://canvasjs.com/))  
+
+
+2019-02-25 
+> API Call受けてきて値段が自動にアップデートされるように変更。
+> 構造大挙変更。

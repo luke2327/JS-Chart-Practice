@@ -1,11 +1,18 @@
-"use-strict";
-var chartFrame = {
-  ctx: document.getElementById('FEbCArea').getContext('2d'),
-  n_xAxisDataSet: [],
-  n_coinsDataSet: [],
-  n_multipleDataSet: [],
+Chart.pluginService.register({
+  beforeDraw: function (chart) {
+    if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
+      var ctx = chart.chart.ctx;
+      var chartArea = chart.chartArea;
 
-async fetchApi(url) {
+      ctx.save();
+      ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
+      ctx.fillRect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+      ctx.restore();
+    }
+  }
+});
+
+async function updateData(chart){
   var reqHeader = new Headers();
   reqHeader = {
     'authority': 'www.farmeos.io',
@@ -15,111 +22,82 @@ async fetchApi(url) {
     'Content-Encoding': 'gzip, deflate, br',
     'cache-control': 'no-cache'
   };
-  let data = await (await fetch(url, reqHeader)).json();
-  return data;
-},
 
-// // var FARM_EOS = 1;
-
-async report() {
-  var res = await this.fetchApi('https://www.farmeos.io/api/v1/crash/query_report');
-  console.log('res', res.data);
-  res.data.series[0].data.forEach((yAxisData) => {
-    this.n_coinsDataSet.push(yAxisData);
-  });
-  res.data.xAxis[0].data.forEach((xAxisData) => {
-    this.n_xAxisDataSet.push(xAxisData);
-  });
-  res.data.series[1].data.forEach((multipleData) => {
-    this.n_multipleDataSet.push(multipleData);
+  var data = (await fetch('https://www.farmeos.io/api/v1/crash/query_report', reqHeader)).json();
+  data.then(res => {
+    chart.data.datasets[0].data = res.data.series[0].data;
+    chart.data.datasets[1].data = res.data.series[1].data;
+    chart.data.labels = res.data.xAxis[0].data;
   });
 
-  this.draw();
-},
-
-async draw() {
-  var FARM_EOS = await new Chart(this.ctx, {
-    type: 'bar',
-    data: {
-      datasets: [{
-        label: 'Bar',
-        data: this.n_coinsDataSet
-      }, {
-        label: 'set',
-        data: this.n_multipleDataSet,
-        type: 'line'
-      }],
-    labels: this.n_xAxisDataSet
-    },
-  });
-
-  // setInterval(this.draw().FARM_EOS.clear(), 1000);
-},
-
-
-gaming: async () => {
-  const res = await fetchApi('https://www.farmeos.io/api/v1/crash/query_gaming');
-  console.log('res', res);
+  chart.update();
 }
 
+var config = {
+
+  xAxisDataSet: [],
+  coinsDataSet: [],
+  multipleDataSet: [],
+
+  type: 'bar',
+  data: {
+    datasets: [{
+      label: 'coins',
+      data: this.coinsDataSet,
+      type: 'bar',
+      backgroundColor: "rgba(0,152,239,.75)",
+    }, {
+      label: 'multiple',
+      data: this.multipleDataSet,
+      type: 'line',
+      backgroundColor: "transparent",
+      borderColor: "#7C8792",
+      borderWidth: 1,
+    }],
+  labels: this.xAxisDataSet
+  },
+  options: {
+    scales: {
+      yAxes: [{
+       ticks:{
+          min : 0,
+          stepSize : 50,
+          fontColor : "#5a697e",
+          fontSize : 14
+        },
+      gridLines:{
+          color: "#28394a",
+          lineWidth:1,
+          // zeroLineColor :"#fff",
+          // zeroLineWidth : 1
+        },
+        stacked: true,
+      }],
+		xAxes: [{
+      maxBarThickness: 10,
+        ticks:{
+          fontColor : "#5a697e",
+          fontSize : 14
+        },
+        gridLines:{
+          color: "#28394a",
+          lineWidth:1
+        },
+        stacked: true,
+      }]
+    },
+    chartArea: {
+      backgroundColor: '#1f222d'
+    },
+    responsive: false,
+  }
 };
 
-chartFrame.report();
-// var ctx = document.getElementById('FEbCArea').getContext('2d');
-// var n_xAxisDataSet = [];
-// var n_coinsDataSet = [];
-// var n_multipleDataSet = [];
 
-// const fetchApi = async (url) => {
-//   var reqHeader = new Headers();
-//   reqHeader = {
-//     'authority': 'www.farmeos.io',
-//     'scheme': 'https',
-//     'accept': 'application/json, text/plain, */*',
-//     'accept-language': 'en-US,en;q=0.9,vi;q=0.8,ko;q=0.7,th;q=0.6',
-//     'Content-Encoding': 'gzip, deflate, br',
-//     'cache-control': 'no-cache'
-//   };
-//   let data = await (await fetch(url, reqHeader)).json();
-//   return data;
-// };
+var ctx = document.getElementById('FEbCArea').getContext('2d');
+var chartFrame = new Chart(ctx, config);
 
-// var FARM_EOS = 1;
-
-// var report = async () => {
-//   var res = await fetchApi('https://www.farmeos.io/api/v1/crash/query_report');
-//   console.log('res', res.data);
-//   res.data.series[0].data.forEach((yAxisData) => {
-//     n_coinsDataSet.push(yAxisData);
-//   });
-//   res.data.xAxis[0].data.forEach((xAxisData) => {
-//     n_xAxisDataSet.push(xAxisData);
-//   });
-//   res.data.series[1].data.forEach((multipleData) => {
-//     n_multipleDataSet.push(multipleData);
-//   });
-
-//   this.FARM_EOS = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//       datasets: [{
-//         label: 'Bar',
-//         data: n_coinsDataSet
-//       }, {
-//         label: 'set',
-//         data: n_multipleDataSet,
-//         type: 'line'
-//       }],
-//     labels: n_xAxisDataSet
-//     },
-//   });
-// };
-
-// console.log(FARM_EOS);
-
-// const gaming = async () => {
-//   const res = await fetchApi('https://www.farmeos.io/api/v1/crash/query_gaming');
-//   console.log('res', res);
-// };
-
-// report();
+updateData(chartFrame);
+setInterval(() => {
+  updateData(chartFrame);
+}, 1000);
