@@ -26,10 +26,10 @@ Canvas.js　        －有料 ([https://canvasjs.com/](https://canvasjs.com/))
 
 
 2019-02-25 
-> API Call受けてきて値段が自動にアップデートされるように変更。
-> 構造大挙変更。
+> API Call受けてきて値段が自動にアップデートされるように変更。  
+> 構造大挙変更。  
 
 2019-02-26
-> y Axis支店をもう一つ作った。
-> multiple値の最大値を10に指定してそれに伴うmultiple値修正。
-> FARMEOSチャートの主席を追加。
+> y Axis支店をもう一つ作った。  
+> multiple値の最大値を10に指定してそれに伴うmultiple値修正。  
+> FARMEOSチャートの主席を追加。  
