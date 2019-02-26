@@ -21,12 +21,14 @@
     <div class="cover-area">
       <button onclick="chartFrame.destroy()">destroy</button>
       <button onclick="chartFrame.clear()">clear</button>
+      <button onclick="chartFrame.update()">update</button>
       <button onclick="updateData(chartFrame)">update data</button>
       <canvas id="FEbCArea" width="793" height="190"></canvas>
     </div>
   </body>
   
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+  <script data-require="jquery" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.js"></script>
   <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
   <script type="text/javascript" src="belowChart.js"></script>
 </html>
