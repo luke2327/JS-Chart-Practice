@@ -1,18 +1,19 @@
-// Chart.pluginService.register({
-//   beforeDraw: function (chart) {
-//     if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
-//       var ctx = chart.chart.ctx;
-//       var chartArea = chart.chartArea;
-
-//       ctx.save();
-//       ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
-//       ctx.fillRect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
-//       ctx.restore();
-//     }
-//   }
-// });
-// 위는 플러그인인데 필요없어서 쓰지 않음
-// 원래 차트 배경색 지정하려고 사용했던 것 인데 <div>태그 안에 <canvas>태그를 만들고 <div>에 배경색을 입히니 간단하게 해결 가능
+Chart.pluginService.register({
+  beforeDraw: function (chart) {
+    if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
+      for (var i = 0; i < chart.config.data.datasets[multipleIndex].data.length; i++){
+        if(chart.config.data.datasets[multipleIndex].data[i] > multipleAxisEnd){
+          tempVal.push(chart.config.data.datasets[multipleIndex].data[i]);
+          tempIndex.push(i);
+          chart.config.data.datasets[multipleIndex].data[i] = multipleAxisEnd;
+          chart.update();
+        }
+      }
+    }
+    
+  }
+});
+// beforeDraw 플러그인을 이용하여 10이 넘는 데이터를 핸들링 한다
 
 /**
  * 
@@ -50,6 +51,96 @@ async function updateData(chart){
   });
 }
 
+var tempVal = [],
+    tempIndex = [];
+const multipleAxisEnd = 10.00,
+      multipleIndex = 1;
+
+var nxAxisDataSet = [
+  "13:39",
+  "13:40",
+  "13:40",
+  "13:41",
+  "13:41",
+  "13:41",
+  "13:42",
+  "13:42",
+  "13:42",
+  "13:43",
+  "13:43",
+  "13:43",
+  "13:44",
+  "13:44",
+  "13:44",
+  "13:45",
+  "13:45",
+  "13:46",
+  "13:46",
+  "13:47",
+  "13:48",
+  "13:48",
+  "13:48",
+  "13:49",
+  "13:49",
+  "13:50"
+],
+  ncoinsDataSet = [
+    60.00,
+    81.30,
+    98.70,
+    82.20,
+    64.50,
+    103.30,
+    47.63,
+    33.80,
+    45.60,
+    33.40,
+    22.90,
+    88.90,
+    33.20,
+    20.20,
+    55.80,
+    17.00,
+    97.10,
+    123.20,
+    117.60,
+    132.10,
+    60.60,
+    100.50,
+    103.80,
+    53.80,
+    105.90,
+    49.10
+  ],
+  nmultipleDataSet = [
+    2.89,
+    1.22,
+    1.17,
+    4.59,
+    49.78,
+    4.06,
+    8.22,
+    2.33,
+    1.31,
+    1,
+    1.86,
+    1.25,
+    1.84,
+    5.66,
+    1.11,
+    1.09,
+    2.9,
+    3.43,
+    1.3,
+    2.74,
+    40.58,
+    2.07,
+    8.37,
+    3,
+    4.23,
+    42.14
+  ];
+
 /**
  * @description 차트 기본 설정
  */
@@ -61,7 +152,7 @@ var config = {
   /**
    * @description y축 coins 데이터
    */
-  coinsDataSet: [],
+  coinsDataSet: [],  
   /**
    * @description y축 multiple 데이터
    */
@@ -72,30 +163,49 @@ var config = {
   data: {
     datasets: [{
       label: 'coins',
-      data: this.coinsDataSet,
+      data: ncoinsDataSet,
       type: 'bar',
       backgroundColor: "rgba(0,152,239,.75)",
       yAxisID: 'y-axis-1'
     }, {
       label: 'multiple',
-      data: this.multipleDataSet,
+      data: nmultipleDataSet,
       type: 'line',
       backgroundColor: "transparent",
       borderColor: "#7C8792",
       borderWidth: 2,
       yAxisID: 'y-axis-2'
     }],
-  labels: this.xAxisDataSet
+  labels: nxAxisDataSet
   },
 
   options: {
     // 마우스 hover했을 때 coins값과 multiple값을 동시에 보여주기 위해 작성
     tooltips: {
-      mode: 'label'
+      mode: 'label',
+      callbacks: {
+        label: function(tooltipItem, data){
+          var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+          if(tooltipItem.datasetIndex == 1 && tooltipItem.yLabel == 10){
+            console.log(chartFrame.data.datasets[1].data[tooltipItem.index]);
+            for(var i = 0; i < tempIndex.length; i++){
+              if(tooltipItem.index == tempIndex[i]){
+                label += ': ' + tempVal[i];
+              }
+            }
+            console.log('tempIndex : ' + tempIndex);
+            console.log('tempVal : ' + tempVal);
+          } else {
+            label += ': ' + tooltipItem.yLabel;
+          }
+          console.log(tooltipItem);
+          return label;
+        }
+      }
     },
     scales: {
-      yAxes: [
-      {
+      yAxes: [{
         type: 'linear',
         display: true,
         position: 'left',
@@ -118,6 +228,7 @@ var config = {
         ticks: {
           // 눈금 최대값 지정
           max: 10,
+          stepSize: 2,
           // 눈금 뒤에 'x'를 붙이기 위해 작성
           callback: function(label) {
             return label+'x';
@@ -131,8 +242,7 @@ var config = {
           drawOnChartArea: true,
           color: '#28394a'
         }
-      }
-    ],
+      }],
 		xAxes: [{
       maxBarThickness: 10,
         ticks:{
@@ -159,10 +269,11 @@ var config = {
 var ctx = document.getElementById('FEbCArea').getContext('2d');
 // Chart Object 생성
 var chartFrame = new Chart(ctx, config);
+// chartFrame.update();
 
 // API call 하는 함수를 호출해 기본 값을 채워 넣음
-updateData(chartFrame);
+// updateData(chartFrame);
 // 1초에 한번씩 반복해 정보가 업데이트 될 때 마다 차트를 갱신해줌
-setInterval(() => {
-  updateData(chartFrame);
-}, 1000);
+// setInterval(() => {
+//   updateData(chartFrame);
+// }, 1000);

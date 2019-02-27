@@ -33,3 +33,7 @@ Canvas.js　        －有料 ([https://canvasjs.com/](https://canvasjs.com/))
 > y Axis支店をもう一つ作った。  
 > multiple値の最大値を10に指定してそれに伴うmultiple値修正。  
 > FARMEOSチャートの主席を追加。  
+
+2019-02-27
+> Multipleラインが最大値を超えたとき処理。  
+> 表示は最大値線とし,ツールチップでは本来の値を表示。  
