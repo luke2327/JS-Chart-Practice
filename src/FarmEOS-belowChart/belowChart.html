@@ -21,18 +21,27 @@
     </header>
     <h1>FARM EOS Chart</h1>
     <canvas id="crashChart" width="600" height="600"></canvas>
-    <div class="cover-area">
-      <button onclick="chartFrame.destroy()">destroy</button>
-      <button onclick="chartFrame.clear()">clear</button>
-      <button onclick="chartFrame.update()">update</button>
-      <button onclick="updateData(chartFrame)">update data</button>
+    <div id="cover-area">
+      <div id="chart-control-area">
+        <button class="controlButton" onclick="chartFrame.destroy()">destroy</button>
+        <button class="controlButton" onclick="chartFrame.clear()">clear</button>
+        <button class="controlButton" onclick="chartFrame.update()">update</button>
+        <!-- <button onclick="updateData(chartFrame)">update data</button> -->
+        <button class="controlButton" onclick="removeData()">remove data</button>
+        <!-- <button class="controlButton" onclick="removeOldData()">remove old data</button> -->
+      </div>
+      <div id="data-control-area">
+        <input id="inputLabel" class="valueInput" type="text" placeholder="input label...">
+        <input id="inputCoins" class="valueInput" type="text" placeholder="input coins...">
+        <input id="inputMultiple" class="valueInput" type="text" placeholder="input multiple...">
+        <button class="controlButton" onclick="addData()">add</button>
+        <!-- <button class="controlButton" onclick="addDataRemoveOldData()">add & remove old data</button> -->
+      </div>
       <canvas id="FEbCArea" width="793" height="190"></canvas>
     </div>
   </body>
   
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-  <script data-require="jquery" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.js"></script>
-  <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
   <script type="text/javascript" src="crashChart.js"></script>
   <script type="text/javascript" src="belowChart.js"></script>
 </html>

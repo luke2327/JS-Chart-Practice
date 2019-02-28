@@ -15,10 +15,17 @@ Chart.pluginService.register({
 });
 // beforeDraw 플러그인을 이용하여 10이 넘는 데이터를 핸들링 한다
 
+var tempVal = [],
+    tempIndex = [],
+    labelValue,
+    coinsValue,
+    multipleValue;
+const multipleAxisEnd = 10.00,
+      multipleIndex = 1;
+
 /**
- * 
- * @param {string} chart 
- * @description fetch로 API Call을 해서 FARM EOS의 정보를 받아옴
+ * fetch로 API Call을 해서 FARM EOS의 정보를 받아옴
+ * @param {object} chart 
  */
 async function updateData(chart){
   var reqHeader = new Headers();
@@ -51,10 +58,66 @@ async function updateData(chart){
   });
 }
 
-var tempVal = [],
-    tempIndex = [];
-const multipleAxisEnd = 10.00,
-      multipleIndex = 1;
+/**
+ * pop() 함수를 이용해 맨 끝의 label, data들을 제거
+ * @param {object} chart 
+ */
+function removeData(chart=chartFrame){
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+    dataset.data.pop();
+  });
+
+  chart.update();
+}
+
+/**
+ * shift() 함수를 이용해 맨 첫번째의 label, data들을 제거
+ * @param {object} chart 
+ */
+// function removeOldData(chart=chartFrame){
+//   chart.data.labels.shift();
+//   chart.data.datasets.forEach((dataset) => {
+//     dataset.data.shift();
+//   });
+
+//   chart.update();
+// }
+
+/**
+ * input창에서 입력받은 데이터를 맨 끝에 새로 추가
+ * @param {object} chart 
+ */
+function addData(chart=chartFrame){
+  const
+    label = document.getElementById("inputLabel").value,
+    coins = document.getElementById("inputCoins").value,
+    multiple = document.getElementById("inputMultiple").value;
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+    if (dataset.label == 'coins')
+      dataset.data.push(coins);
+    else if (dataset.label == 'multiple')
+      dataset.data.push(multiple);
+  });
+
+  chart.update();
+}
+
+/**
+ * input창에서 입력받은 데이터를 맨 끝에 새로 추가하고 맨 끝의 데이터는 삭제
+ * @param {object} chart 
+ */
+// function addDataRemoveOldData(chart=chartFrame){
+//   chart.data.labels.shift();
+//   chart.data.datasets.forEach((dataset) => {
+//     dataset.data.shift();
+//   });
+//   // removeOldData(chart);
+//   addData(chart);
+// }
+
+
 
 var nxAxisDataSet = [
   "13:39",
@@ -84,7 +147,7 @@ var nxAxisDataSet = [
   "13:49",
   "13:50"
 ],
-  ncoinsDataSet = [
+    ncoinsDataSet = [
     60.00,
     81.30,
     98.70,
@@ -112,7 +175,7 @@ var nxAxisDataSet = [
     105.90,
     49.10
   ],
-  nmultipleDataSet = [
+    nmultipleDataSet = [
     2.89,
     1.22,
     1.17,
@@ -197,6 +260,7 @@ var config = {
             console.log('tempIndex : ' + tempIndex);
             console.log('tempVal : ' + tempVal);
           } else {
+            console.log('common');
             label += ': ' + tooltipItem.yLabel;
           }
           console.log(tooltipItem);
@@ -213,7 +277,7 @@ var config = {
         ticks: {
           min: 0,
           // 눈금 간격
-          stepSize: 30,
+          // stepSize: 30,
           fontColor: "#5a697a",
           fontSize: 14
         },
@@ -261,7 +325,7 @@ var config = {
     chartArea: {
       backgroundColor: '#1f222d'
     },
-    responsive: false,
+    // responsive: false,
   }
 };
 
@@ -270,6 +334,8 @@ var ctx = document.getElementById('FEbCArea').getContext('2d');
 // Chart Object 생성
 var chartFrame = new Chart(ctx, config);
 // chartFrame.update();
+
+Chart.defaults.global.legend.boxWidth = 100;
 
 // API call 하는 함수를 호출해 기본 값을 채워 넣음
 // updateData(chartFrame);

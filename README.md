@@ -9,8 +9,8 @@ FusionCharts　     －有料 ([https://www.fusioncharts.com/](https://www.fusio
 **Chart.js**　     －チェック ([https://www.chartjs.org/](https://www.chartjs.org/)  
 **Google Charts**　－チェック ([https://developers.google.com/chart/](https://developers.google.com/chart/))  
 Highcharts　       －有料 ([https://www.highcharts.com/](https://www.highcharts.com/))  
-Flot  
-D3.js  
+**Flot**  
+**D3.js**  
 n3-charts  
 NVD3  
 Ember Charts  
@@ -37,3 +37,8 @@ Canvas.js　        －有料 ([https://canvasjs.com/](https://canvasjs.com/))
 2019-02-27
 > Multipleラインが最大値を超えたとき処理。  
 > 表示は最大値線とし,ツールチップでは本来の値を表示。  
+
+2019-02-28
+> チャート及びデータ操作ボタン追加。  
+> データ削除,データ生成ロジックを追加。  
+> 不用なスクリプト·ロード除去。  
