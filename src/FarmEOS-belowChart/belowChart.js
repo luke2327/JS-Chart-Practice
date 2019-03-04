@@ -237,7 +237,10 @@ var config = {
       backgroundColor: "transparent",
       borderColor: "#7C8792",
       borderWidth: 2,
-      yAxisID: 'y-axis-2'
+      yAxisID: 'y-axis-2',
+      borderCapStyle: 'butt',
+      borderJoinStyle: 'mitter',
+      lineTension: 0.4,
     }],
   labels: nxAxisDataSet
   },
